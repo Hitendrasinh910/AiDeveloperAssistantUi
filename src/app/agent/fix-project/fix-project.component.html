@@ -64,8 +64,8 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <div class="card-body">
             <span class="badge text-bg-primary mb-2">Project Summary</span>
-            <h5 class="fw-bold">{{ response.title }}</h5>
-            <p class="text-muted mb-0">{{ response.summary }}</p>
+            <h5 class="fw-bold">{{ response?.title }}</h5>
+            <p class="text-muted mb-0">{{ response?.summary }}</p>
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <div class="card-body text-center">
             <span class="badge text-bg-warning mb-2">Score</span>
-            <h1 class="fw-bold">{{ response.score }}/10</h1>
+            <h1 class="fw-bold">{{ response?.score }}/10</h1>
           </div>
         </div>
       </div>
@@ -128,7 +128,7 @@
           <div class="card-body">
             <span class="badge text-bg-secondary mb-2">Refactored Code Suggestion</span>
             <pre class="bg-dark text-light p-3 rounded-3 mb-0">
-<code>{{ response.refactoredCodeSuggestion }}</code>
+<code>{{ response?.refactoredCodeSuggestion }}</code>
             </pre>
           </div>
         </div>

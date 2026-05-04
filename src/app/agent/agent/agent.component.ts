@@ -3,10 +3,11 @@ import { AgentResponse } from '../models/agent-response.model';
 import { AgentRequest } from '../models/agent-request.model';
 import { AgentService } from '../services/agent.service';
 import { FormsModule } from '@angular/forms';
+import { CodeDiffComponent } from '../code-diff/code-diff.component';
 
 @Component({
   selector: 'app-agent',
-  imports: [FormsModule],
+  imports: [FormsModule, CodeDiffComponent],
   templateUrl: './agent.component.html',
   styleUrl: './agent.component.scss',
 })

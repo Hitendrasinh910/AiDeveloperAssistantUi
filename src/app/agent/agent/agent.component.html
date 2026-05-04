@@ -91,7 +91,7 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <div class="card-body">
             <span class="badge text-bg-primary mb-2">Title</span>
-            <h5 class="fw-bold">{{ response.title }}</h5>
+            <h5 class="fw-bold">{{ response?.title }}</h5>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <div class="card-body">
             <span class="badge text-bg-warning mb-2">Summary</span>
-            <p class="text-muted mb-0">{{ response.summary }}</p>
+            <p class="text-muted mb-0">{{ response?.summary }}</p>
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@
         <div class="card border-0 shadow-sm rounded-4">
           <div class="card-body">
             <span class="badge text-bg-success mb-2">Solution</span>
-            <p class="text-muted mb-0">{{ response.solution }}</p>
+            <p class="text-muted mb-0">{{ response?.solution }}</p>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
         <div class="card border-0 shadow-sm rounded-4">
           <div class="card-body">
             <span class="badge text-bg-info mb-2">Explanation</span>
-            <p class="text-muted mb-0">{{ response.explanation }}</p>
+            <p class="text-muted mb-0">{{ response?.explanation }}</p>
           </div>
         </div>
       </div>
@@ -133,7 +133,7 @@
               </button>
             </div>
 
-            <pre class="bg-dark text-light p-3 rounded-3 mb-0"><code>{{ response.generatedCode }}</code></pre>
+            <pre class="bg-dark text-light p-3 rounded-3 mb-0"><code>{{ response?.generatedCode }}</code></pre>
           </div>
         </div>
       </div>
@@ -161,7 +161,7 @@
       </div>
 
       <div class="col-12" *ngIf="response.diffItems?.length">
-        <app-code-diff [diffItems]="response.diffItems"></app-code-diff>
+        <app-code-diff [diffItems]="response?.diffItems"></app-code-diff>
       </div>
 
     </div>
