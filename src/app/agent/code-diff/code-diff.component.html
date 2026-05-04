@@ -1,0 +1,35 @@
+<div class="card border-0 shadow-sm rounded-4">
+  <div class="card-body">
+
+    <h5 class="fw-bold mb-3">
+      <i class="bi bi-intersect text-primary me-2"></i>
+      Code Diff Viewer
+    </h5>
+
+    <div class="row fw-bold text-muted mb-2">
+      <div class="col-md-6">Original</div>
+      <div class="col-md-6">Refactored</div>
+    </div>
+
+    <div *ngFor="let item of diffItems" class="row g-2 mb-2">
+
+      <div class="col-md-6">
+        <pre class="p-3 rounded-3 mb-0"
+             [ngClass]="{
+               'bg-danger-subtle': item.type === 'removed' || item.type === 'changed',
+               'bg-light': item.type === 'added'
+             }">{{ item.originalLine || '-' }}</pre>
+      </div>
+
+      <div class="col-md-6">
+        <pre class="p-3 rounded-3 mb-0"
+             [ngClass]="{
+               'bg-success-subtle': item.type === 'added' || item.type === 'changed',
+               'bg-light': item.type === 'removed'
+             }">{{ item.newLine || '-' }}</pre>
+      </div>
+
+    </div>
+
+  </div>
+</div>

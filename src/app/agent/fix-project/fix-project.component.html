@@ -1,0 +1,141 @@
+<div class="row g-4">
+
+  <div class="col-lg-4">
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-4">
+
+        <h4 class="fw-bold mb-1">
+          <i class="bi bi-folder-check text-primary me-2"></i>
+          Fix Project
+        </h4>
+        <p class="text-muted mb-4">Upload multiple files for project analysis.</p>
+
+        <input class="form-control rounded-3"
+               type="file"
+               multiple
+               accept=".cs,.sql,.json,.txt,.log,.ts,.html,.scss"
+               (change)="onFilesSelected($event)">
+
+        <div *ngIf="selectedFiles.length > 0" class="mt-3">
+          <h6 class="fw-bold">Selected Files</h6>
+
+          <ul class="list-group">
+            <li *ngFor="let file of selectedFiles"
+                class="list-group-item d-flex justify-content-between align-items-center">
+              <span>
+                <i class="bi bi-file-earmark-code me-2 text-primary"></i>
+                {{ file.name }}
+              </span>
+              <span class="badge text-bg-light">
+                {{ file.size / 1024 | number:'1.0-0' }} KB
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <button class="btn btn-primary w-100 rounded-3 mt-4"
+                (click)="analyzeProject()"
+                [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ loading ? 'Analyzing...' : 'Analyze Project' }}
+        </button>
+
+        <div *ngIf="errorMessage" class="alert alert-danger rounded-4 mt-3 mb-0">
+          {{ errorMessage }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+
+    <div *ngIf="!response && !loading" class="card border-0 shadow-sm rounded-4">
+      <div class="card-body text-center p-5">
+        <div class="display-4 mb-3">🛠</div>
+        <h4 class="fw-bold">No project analysis yet</h4>
+        <p class="text-muted mb-0">Upload files and click Analyze Project.</p>
+      </div>
+    </div>
+
+    <div *ngIf="response" class="row g-3">
+
+      <div class="col-md-8">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-primary mb-2">Project Summary</span>
+            <h5 class="fw-bold">{{ response.title }}</h5>
+            <p class="text-muted mb-0">{{ response.summary }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body text-center">
+            <span class="badge text-bg-warning mb-2">Score</span>
+            <h1 class="fw-bold">{{ response.score }}/10</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-danger mb-2">Project Issues</span>
+            <ul>
+              <li *ngFor="let item of response.projectIssues">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-info mb-2">Architecture Issues</span>
+            <ul>
+              <li *ngFor="let item of response.architectureIssues">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-dark mb-2">Security Issues</span>
+            <ul>
+              <li *ngFor="let item of response.securityIssues">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-success mb-2">Recommended Fixes</span>
+            <ul>
+              <li *ngFor="let item of response.recommendedFixes">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <span class="badge text-bg-secondary mb-2">Refactored Code Suggestion</span>
+            <pre class="bg-dark text-light p-3 rounded-3 mb-0">
+<code>{{ response.refactoredCodeSuggestion }}</code>
+            </pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,170 @@
+<div class="row g-4">
+
+  <div class="col-lg-5">
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-4">
+
+        <h4 class="fw-bold mb-1">
+          <i class="bi bi-stars text-primary me-2"></i>
+          Multi-Purpose Agent
+        </h4>
+        <p class="text-muted mb-4">Debug, explain, generate and review code.</p>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Mode</label>
+          <select class="form-select rounded-3" [(ngModel)]="request.mode">
+            <option *ngFor="let mode of modes" [value]="mode">{{ mode }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Technology</label>
+          <input class="form-control rounded-3" [(ngModel)]="request.technology">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Topic</label>
+          <input class="form-control rounded-3"
+                 [(ngModel)]="request.topic"
+                 placeholder="JWT, LINQ, SQL Indexing">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Requirement</label>
+          <textarea class="form-control rounded-3"
+                    rows="4"
+                    [(ngModel)]="request.requirement"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Error Message</label>
+          <textarea class="form-control rounded-3"
+                    rows="4"
+                    [(ngModel)]="request.errorMessage"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Code</label>
+          <textarea class="form-control rounded-3 font-monospace"
+                    rows="8"
+                    [(ngModel)]="request.code"></textarea>
+        </div>
+
+        <button class="btn btn-primary w-100 rounded-3 py-2 fw-semibold"
+                (click)="submit()"
+                [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ loading ? 'Processing...' : 'Generate Response' }}
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+
+    <div class="card border-0 shadow-sm rounded-4 bg-primary text-white mb-4">
+      <div class="card-body p-4">
+        <h3 class="fw-bold mb-1">AI Developer Copilot</h3>
+        <p class="mb-0 opacity-75">
+          Practical help for .NET, Angular, SQL, debugging and architecture.
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger rounded-4 shadow-sm">
+      <i class="bi bi-exclamation-triangle me-2"></i>
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="!response && !loading" class="card border-0 shadow-sm rounded-4">
+      <div class="card-body text-center p-5">
+        <div class="display-4 mb-3">🚀</div>
+        <h4 class="fw-bold">No response yet</h4>
+        <p class="text-muted mb-0">Fill request details and generate response.</p>
+      </div>
+    </div>
+
+    <div *ngIf="response" class="row g-3">
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-primary mb-2">Title</span>
+            <h5 class="fw-bold">{{ response.title }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-warning mb-2">Summary</span>
+            <p class="text-muted mb-0">{{ response.summary }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <span class="badge text-bg-success mb-2">Solution</span>
+            <p class="text-muted mb-0">{{ response.solution }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <span class="badge text-bg-info mb-2">Explanation</span>
+            <p class="text-muted mb-0">{{ response.explanation }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge text-bg-dark">Generated Code</span>
+              <button class="btn btn-sm btn-outline-secondary rounded-3" (click)="copyCode()">
+                <i class="bi bi-copy me-1"></i> Copy
+              </button>
+            </div>
+
+            <pre class="bg-dark text-light p-3 rounded-3 mb-0"><code>{{ response.generatedCode }}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-danger mb-2">Key Points</span>
+            <ul class="mb-0">
+              <li *ngFor="let item of response.keyPoints">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body">
+            <span class="badge text-bg-success mb-2">Next Steps</span>
+            <ul class="mb-0">
+              <li *ngFor="let item of response.nextSteps">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="response.diffItems?.length">
+        <app-code-diff [diffItems]="response.diffItems"></app-code-diff>
+      </div>
+
+    </div>
+  </div>
+
+</div>
