@@ -18,7 +18,7 @@ export interface ProjectFixResponse {
   providedIn: 'root',
 })
 export class FileAnalyzerService {
-  private apiUrl = 'https://localhost:7093/api/File';
+  private apiUrl = 'https://localhost:7161/api/File';
 
   constructor(private http: HttpClient) {}
 

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, CommonModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })

@@ -1,6 +1,7 @@
 <div class="row g-4">
 
-  <div class="col-lg-5">
+  <!-- LEFT REQUEST -->
+  <div class="col-xl-4">
     <div class="card border-0 shadow-sm rounded-4">
       <div class="card-body p-4">
 
@@ -12,45 +13,37 @@
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Mode</label>
-          <select class="form-select rounded-3" [(ngModel)]="request.mode">
+          <select class="form-select" [(ngModel)]="request.mode">
             <option *ngFor="let mode of modes" [value]="mode">{{ mode }}</option>
           </select>
         </div>
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Technology</label>
-          <input class="form-control rounded-3" [(ngModel)]="request.technology">
+          <input class="form-control" [(ngModel)]="request.technology">
         </div>
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Topic</label>
-          <input class="form-control rounded-3"
-                 [(ngModel)]="request.topic"
-                 placeholder="JWT, LINQ, SQL Indexing">
+          <input class="form-control" [(ngModel)]="request.topic" placeholder="JWT, LINQ, SQL Indexing">
         </div>
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Requirement</label>
-          <textarea class="form-control rounded-3"
-                    rows="4"
-                    [(ngModel)]="request.requirement"></textarea>
+          <textarea class="form-control" rows="3" [(ngModel)]="request.requirement"></textarea>
         </div>
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Error Message</label>
-          <textarea class="form-control rounded-3"
-                    rows="4"
-                    [(ngModel)]="request.errorMessage"></textarea>
+          <textarea class="form-control" rows="3" [(ngModel)]="request.errorMessage"></textarea>
         </div>
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Code</label>
-          <textarea class="form-control rounded-3 font-monospace"
-                    rows="8"
-                    [(ngModel)]="request.code"></textarea>
+          <textarea class="form-control font-monospace" rows="6" [(ngModel)]="request.code"></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 rounded-3 py-2 fw-semibold"
+        <button class="btn btn-primary w-100 py-2 fw-semibold"
                 (click)="submit()"
                 [disabled]="loading">
           <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
@@ -61,7 +54,8 @@
     </div>
   </div>
 
-  <div class="col-lg-7">
+  <!-- RIGHT RESPONSE -->
+  <div class="col-xl-8">
 
     <div class="card border-0 shadow-sm rounded-4 bg-primary text-white mb-4">
       <div class="card-body p-4">
@@ -91,7 +85,7 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <div class="card-body">
             <span class="badge text-bg-primary mb-2">Title</span>
-            <h5 class="fw-bold">{{ response?.title }}</h5>
+            <h5 class="fw-bold mb-0">{{ response.title }}</h5>
           </div>
         </div>
       </div>
@@ -100,7 +94,7 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <div class="card-body">
             <span class="badge text-bg-warning mb-2">Summary</span>
-            <p class="text-muted mb-0">{{ response?.summary }}</p>
+            <p class="text-muted mb-0 lh-lg">{{ response.summary }}</p>
           </div>
         </div>
       </div>
@@ -109,7 +103,7 @@
         <div class="card border-0 shadow-sm rounded-4">
           <div class="card-body">
             <span class="badge text-bg-success mb-2">Solution</span>
-            <p class="text-muted mb-0">{{ response?.solution }}</p>
+            <p class="text-muted lh-lg mb-0">{{ response.solution }}</p>
           </div>
         </div>
       </div>
@@ -118,22 +112,25 @@
         <div class="card border-0 shadow-sm rounded-4">
           <div class="card-body">
             <span class="badge text-bg-info mb-2">Explanation</span>
-            <p class="text-muted mb-0">{{ response?.explanation }}</p>
+            <div class="text-muted lh-lg" style="white-space: pre-line;">
+              {{ response.explanation }}
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" *ngIf="response.generatedCode">
         <div class="card border-0 shadow-sm rounded-4">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="badge text-bg-dark">Generated Code</span>
-              <button class="btn btn-sm btn-outline-secondary rounded-3" (click)="copyCode()">
+              <button class="btn btn-sm btn-outline-secondary" (click)="copyCode()">
                 <i class="bi bi-copy me-1"></i> Copy
               </button>
             </div>
 
-            <pre class="bg-dark text-light p-3 rounded-3 mb-0"><code>{{ response?.generatedCode }}</code></pre>
+            <pre class="bg-dark text-light p-3 rounded-3 mb-0 overflow-auto"
+                 style="max-height: 360px; white-space: pre-wrap;"><code>{{ response.generatedCode }}</code></pre>
           </div>
         </div>
       </div>
@@ -142,7 +139,7 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <div class="card-body">
             <span class="badge text-bg-danger mb-2">Key Points</span>
-            <ul class="mb-0">
+            <ul class="mb-0 lh-lg">
               <li *ngFor="let item of response.keyPoints">{{ item }}</li>
             </ul>
           </div>
@@ -153,18 +150,15 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <div class="card-body">
             <span class="badge text-bg-success mb-2">Next Steps</span>
-            <ul class="mb-0">
+            <ul class="mb-0 lh-lg">
               <li *ngFor="let item of response.nextSteps">{{ item }}</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="col-12" *ngIf="response.diffItems?.length">
-        <app-code-diff [diffItems]="response?.diffItems"></app-code-diff>
-      </div>
-
     </div>
+
   </div>
 
 </div>

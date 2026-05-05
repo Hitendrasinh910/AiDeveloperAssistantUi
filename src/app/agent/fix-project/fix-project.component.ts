@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FileAnalyzerService, ProjectFixResponse } from '../services/file-analyzer.service';
-import { DecimalPipe } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-fix-project',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, CommonModule],
   templateUrl: './fix-project.component.html',
   styleUrl: './fix-project.component.scss',
 })
